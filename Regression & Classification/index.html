@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="productCustomizer">
+<head>
+    <title> Assignment 2 - ADS - Spring 2017 </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+</head>
+<body ng-controller="MainController" style="padding: 20px;">
+<style>
+    .high{
+        background-color: lightgreen;
+    }
+</style>
+<h1>Lending Club Loan Portal</h1>
+<h3> An easy way to get loans, check your interest now!!</h3>
+<br/><br/>
+<script src="app.js"></script>
+<script src="config.js"></script>
+<script src="main.controller.js"></script>
+
+<div class="col-sm-6">
+    <ul class="nav nav-pills nav-justified">
+        <li class="btn" ng-click="method = 'prediction'" ng-class="{'btn-primary': method == 'prediction'}">Classification</li>
+        <li class="btn" ng-click="method = 'classification'" ng-class="{'btn-primary': method == 'classification'}">Interest Rates</li>
+    </ul>
+    <form class="form-horizontal" style="padding-top: 5px;">
+      <div style="box-shadow: 1px 1px 1px 2px #cacaca; padding: 3px; margin: 10px;">
+        <div class="form-group" ng-show="method == 'classification' || method == 'prediction' ">
+            <label for="loan_amount" class="col-sm-4 control-label"> Loan Amount </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="loan_amount" type="number" ng-model="loan_amount" required>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="method == 'classification' || method == 'prediction'">
+            <label for="fico" class="col-sm-4 control-label"> Credit Score (FICO) </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="fico" type="number" ng-model="fico">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' || method == 'prediction'">
+            <label for="dti" class="col-sm-4 control-label"> Debt-to-Income Ratio (DTI) </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="dti" type="text" ng-model="dti">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' || method == 'prediction'">
+            <label for="state" class="col-sm-4 control-label"> State </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="state" type="text" ng-model="state">
+            </div>
+        </div>
+         <div class="form-group" ng-show="method == 'classification' || method == 'prediction'">
+            <label for="employmnt_length" class="col-sm-4 control-label">Employment Length </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="employmnt_length" type="text" ng-model="employmnt_length">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' || method == 'prediction'">
+            <label for="purpose" class="col-sm-4 control-label">Purpose </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="purpose" type="text" ng-model="purpose">
+            </div>
+        </div>
+          <!---
+                -->
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="term" class="col-sm-4 control-label"> Term </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="term" type="text" ng-model="term">
+            </div>
+        </div>
+         <div class="form-group" ng-show="method == 'classification' ">
+            <label for="home_ownership" class="col-sm-4 control-label">Home Ownership </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="home_ownership" type="text" ng-model="home_ownership">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="annual_inc" class="col-sm-4 control-label">Annual Income (in dollars) </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="annual_inc" type="text" ng-model="annual_inc">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="verification_status" class="col-sm-4 control-label"> Verification Status </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="verification_status" type="text" ng-model="verification_status">
+            </div>
+        </div>
+         <div class="form-group" ng-show="method == 'classification' ">
+            <label for="delinq_2yrs" class="col-sm-4 control-label"> Number of Delinquency (in last 2 years) </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="delinq_2yrs" type="text" ng-model="delinq_2yrs">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="inq_last_6mths" class="col-sm-4 control-label">Inquiry in last 6 months </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="inq_last_6mths" type="text" ng-model="inq_last_6mths">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="mths_since_last_delinq" class="col-sm-4 control-label">Months since last delinquent </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="mths_since_last_delinq" type="text" ng-model="mths_since_last_delinq">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="open_acc" class="col-sm-4 control-label"> Open Accounts </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="open_acc" type="text" ng-model="open_acc">
+            </div>
+        </div>
+         <div class="form-group" ng-show="method == 'classification' ">
+            <label for="pub_rec" class="col-sm-4 control-label"> Public records </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="pub_rec" type="text" ng-model="pub_rec">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="total_acc" class="col-sm-4 control-label">Total Accounts so far </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="total_acc" type="text" ng-model="total_acc">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="revol_util" class="col-sm-4 control-label"> Revol Util % </label>
+            <div class="col-sm-8">
+                <input class="form-control" id="revol_util" type="text" ng-model="revol_util">
+            </div>
+        </div>
+         <div class="form-group" ng-show="method == 'classification' ">
+            <label for="mths_since_last_major_derog" class="col-sm-4 control-label"> Months Since Last Major Derog</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="mths_since_last_major_derog" type="text" ng-model="mths_since_last_major_derog">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="application_type" class="col-sm-4 control-label">Application Type</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="application_type" type="text" ng-model="application_type">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="acc_now_delinq" class="col-sm-4 control-label"> Account Now Delinquent</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="acc_now_delinq" type="text" ng-model="acc_now_delinq">
+            </div>
+        </div>
+         <div class="form-group" ng-show="method == 'classification' ">
+            <label for="open_acc_6m" class="col-sm-4 control-label">Open Account in 6 months</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="open_acc_6m" type="text" ng-model="open_acc_6m">
+            </div>
+        </div>
+        <div class="form-group" ng-show="method == 'classification' ">
+            <label for="pub_rec_bankruptcies" class="col-sm-4 control-label">Public Record Bankruptcies</label>
+            <div class="col-sm-8">
+                <input class="form-control" id="pub_rec_bankruptcies" type="text" ng-model="pub_rec_bankruptcies">
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="form-group" ng-show="method == 'classification' || method == 'prediction'">
+            <div class="col-sm-offset-2">
+                <button type="submit" class="btn text-center" style="background-color: #0d5724; color:#ffffff; width:70%; font-size:18px;" ng-click="predict()">Enroll now</button>
+            </div>
+        </div>
+      </div>
+    </form>
+    <div ng-show="method == 'A'">
+    </div>
+    <div ng-show="method == 'B'">
+
+    </div>
+    <div ng-show="method == 'C'">
+        <rzslider rz-slider-model="slider.value"
+                  rz-slider-options="slider.options"></rzslider>
+    </div>
+</div>
+<div class="col-sm-5 col-sm-offset-1">
+  <div ng-show="method == 'prediction'">
+    <h2>Classification Output</h2>
+    <table class="table table-hover">
+        <tr>
+
+            <th>Status</th>
+            <th>Probability</th>
+        </tr>
+      <!--  <tr ng-repeat="result in classification_results" ng-class="{'high' : result.probability >= 0.5}">-->
+          <tr ng-repeat="result in classification_results" ng-class="{'high' : result.probability >= 0.5}">
+
+            <td> {{result.approved_status}}</td>
+            <td> {{result.probability}}</td>
+        </tr>
+    </table>
+  </div>
+    <div ng-show="method == 'classification'">
+      <h2>Algorithm Clustering Output</h2>
+      <table class="table table-hover">
+          <tr>
+              <th>Algorithm Used</th>
+              <th>Assigned Cluster</th>
+              <th>Calculating Interest Rate</th>
+          </tr>
+          <tr ng-repeat="result in results">
+              <td> {{result.type}}</td>
+              <td> {{result.cluster}}</td>
+              <td> {{result.interest}}</td>
+          </tr>
+      </table>
+      <h2>Default Interest</h2>
+      <table class="table table-hover">
+          <tr>
+              <th>Default Interest</th>
+          </tr>
+          <tr ng-repeat="d in def">
+              <td> {{d.int_rate}}</td>
+          </tr>
+      </table>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+function showValue(newValue)
+{
+    document.getElementById("Wind_SpeedMPH").innerHTML=newValue;
+}
+</script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
+<link src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css">
+
+</body>
+</html>
