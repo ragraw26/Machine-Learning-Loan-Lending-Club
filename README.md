@@ -1,6 +1,6 @@
 # Machine-Learning-Loan-Lending-Club
 
-You are working at a bank and you are considering investing in Lending club. Since there are no standard models, you are expected to build prediction models that will help you predict the interest rates based on various parameters users would input.
+We are working at a bank and we are considering investing in Lending club. Since there are no standard models, we are expected to build prediction models that will help you predict the interest rates based on various parameters users would input.
 
 # Part 1: Data wrangling and exploratory data analysis
 
